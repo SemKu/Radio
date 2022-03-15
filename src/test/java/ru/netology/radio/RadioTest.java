@@ -6,10 +6,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
     @Test
-    void shouldNewNumberObservedStation() {
+    void shouldMaxNewNumberObservedStation() {
         Radio cond = new Radio();
-        cond.setNumberObservedStation(5);
-        int expected = 5;
+        cond.setNumberObservedStation(9);
+        int expected = 9;
+        int actual = cond.getNumberObservedStation();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldMinNewNumberObservedStation() {
+        Radio cond = new Radio();
+        cond.setNumberObservedStation(0);
+        int expected = 0;
         int actual = cond.getNumberObservedStation();
         assertEquals(expected, actual);
     }
@@ -33,7 +42,7 @@ class RadioTest {
     }
 
     @Test
-    void shouldNextNumberObservedStation() {
+    void shouldNextNumberObservedStationAfterMin() {
         Radio cond = new Radio();
         cond.next(0);
         int expected = 1;
@@ -51,10 +60,19 @@ class RadioTest {
     }
 
     @Test
+    void shouldNextNumberObservedStation() {
+        Radio cond = new Radio();
+        cond.next(8);
+        int expected = 9;
+        int actual = cond.getNumberObservedStation();
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void shouldPrevNumberObservedStation() {
         Radio cond = new Radio();
-        cond.prev(5);
-        int expected = 4;
+        cond.prev(1);
+        int expected = 0;
         int actual = cond.getNumberObservedStation();
         assertEquals(expected, actual);
     }
@@ -78,16 +96,34 @@ class RadioTest {
     }
 
     @Test
-    void shouldNewCurrentVolume() {
+    void shouldMinNewCurrentVolume() {
         Radio cond = new Radio();
-        cond.setCurrentVolume(5);
-        int expected = 5;
+        cond.setCurrentVolume(0);
+        int expected = 0;
         int actual = cond.getCurrentVolume();
         assertEquals(expected, actual);
     }
 
     @Test
-    void shouldNewCurrentVolumeDifferentFromMax() {
+    void shouldAfterFromMinNewCurrentVolume() {
+        Radio cond = new Radio();
+        cond.setCurrentVolume(-1);
+        int expected = 0;
+        int actual = cond.getCurrentVolume();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldMaxNewCurrentVolume() {
+        Radio cond = new Radio();
+        cond.setCurrentVolume(10);
+        int expected = 10;
+        int actual = cond.getCurrentVolume();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldAfterFromMaxNewCurrentVolume() {
         Radio cond = new Radio();
         cond.setCurrentVolume(11);
         int expected = 0;
@@ -95,14 +131,6 @@ class RadioTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    void shouldNewCurrentVolumeDifferentFromMin() {
-        Radio cond = new Radio();
-        cond.setCurrentVolume(-1);
-        int expected = 0;
-        int actual = cond.getCurrentVolume();
-        assertEquals(expected, actual);
-    }
 
     @Test
     void shouldUpCurrentVolumeAfterMax() {
@@ -114,10 +142,10 @@ class RadioTest {
     }
 
     @Test
-    void shouldUpCurrentVolume() {
+    void shouldUpCurrentVolumeAfterMin() {
         Radio cond = new Radio();
-        cond.upVolume(9);
-        int expected = 10;
+        cond.upVolume(0);
+        int expected = 1;
         int actual = cond.getCurrentVolume();
         assertEquals(expected, actual);
     }
@@ -125,8 +153,8 @@ class RadioTest {
     @Test
     void shouldDownCurrentVolume() {
         Radio cond = new Radio();
-        cond.downVolume(10);
-        int expected = 9;
+        cond.downVolume(1);
+        int expected = 0;
         int actual = cond.getCurrentVolume();
         assertEquals(expected, actual);
     }
@@ -141,11 +169,21 @@ class RadioTest {
     }
 
     @Test
-    void shouldDownCurrentVolumeDifferentFromMax() {
+    void shouldDownCurrentVolumeAfterMax() {
+        Radio cond = new Radio();
+        cond.downVolume(10);
+        int expected = 9;
+        int actual = cond.getCurrentVolume();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldDownCurrentVolumeDifferentAfterMax() {
         Radio cond = new Radio();
         cond.downVolume(11);
         int expected = 0;
         int actual = cond.getCurrentVolume();
         assertEquals(expected, actual);
     }
+
 }
